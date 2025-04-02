@@ -1,12 +1,17 @@
-'use client';
-
-import React, { useState, useEffect, useContext } from 'react';
+"use client";
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { GenresContext } from '@/lib/genresProvider';
 import Row from '@/components/Row/Row';
 
-function ListBySearch() {
-    const genres = useContext(GenresContext);
+export default function SearchPageWrapper(props: any) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchPage {...props} />
+    </Suspense>
+  );
+}
+
+function SearchPage() {
     const searchParams = useSearchParams();
       const searchString = searchParams.get('q');
     
@@ -41,5 +46,3 @@ function ListBySearch() {
         </div>
     );
 }
-
-export default ListBySearch;

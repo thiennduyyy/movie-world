@@ -1,11 +1,20 @@
-'use client';
-import { use } from "react";
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useSearchParams } from 'next/navigation';
+"use client";
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { GenresContext } from '@/lib/genresProvider';
 import Row from '@/components/Row/Row';
+import { use } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 
-function ListByGenres({ params }: { params: Promise<{ genre_id: string }> }) {
+export default function GenrePageWrapper(props: any) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GenrePage {...props} />
+    </Suspense>
+  );
+}
+
+function GenrePage({ params }: { params: Promise<{ genre_id: string }> }) {
     const searchParams = useSearchParams();
   const type = searchParams.get('type');
     const genresContext = useContext(GenresContext);
@@ -49,5 +58,3 @@ function ListByGenres({ params }: { params: Promise<{ genre_id: string }> }) {
         </div>
     );
 }
-
-export default ListByGenres;

@@ -1,12 +1,19 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+"use client";
+import { Suspense, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import axios from '@/components/axios';
 import { TVShow, Season } from '@/lib/types/types';
 import EpisodeHandler from '@/components/EpisodeHandler/EpisodesHandler';
 
-function TVShowPlayer() {
+export default function TVWatchPageWrapper(props: any) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TVWatchPage {...props} />
+    </Suspense>
+  );
+}
+
+function TVWatchPage() {
     const params = useParams();
     const searchParams = useSearchParams();
     const id = params.id as string;
@@ -94,5 +101,3 @@ function TVShowPlayer() {
         </div>
     );
 }
-
-export default TVShowPlayer;

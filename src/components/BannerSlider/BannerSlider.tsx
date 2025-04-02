@@ -10,8 +10,17 @@ import 'swiper/css/pagination';
 import { Autoplay, Navigation, Thumbs } from 'swiper/modules';
 import { moviesURL } from '@/lib/requests';
 
+interface Movie {
+  id: number;
+  title?: string;
+  name?: string;
+  original_name?: string;
+  backdrop_path?: string;
+  overview?: string;
+}
+
 function BannerSlider() {
-  const [movies, setMovies] = useState<any[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -87,7 +96,7 @@ function BannerSlider() {
                 </button>
               </div>
               <p className="text-lg font-light leading-7">
-                {truncate(movie?.overview, 300)}
+                {truncate(movie?.overview!, 300)}
               </p>
             </div>
             <div className="absolute bottom-0 w-full h-28 bg-gradient-to-t from-black to-transparent"></div>

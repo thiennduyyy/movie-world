@@ -6,7 +6,6 @@ import ScrollToTop from '@/components/ScrollToTop/ScrollToTop';
 import './globals.css';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import PageTransition from '@/components/layout/PageTransition';
 
 const inter = Inter({ subsets: ['latin'] });
 

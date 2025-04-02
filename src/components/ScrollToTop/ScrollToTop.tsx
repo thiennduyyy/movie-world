@@ -1,16 +1,19 @@
 'use client';
 
-import { ReactNode, useEffect } from "react";
+import { Suspense, useEffect } from 'react';
 import { usePathname, useSearchParams } from "next/navigation";
 
-type ScrollToTopProps = {
-  children: ReactNode;
-};
+export default function ScrollToTopWrapper(props: any) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ScrollToTop {...props} />
+    </Suspense>
+  );
+}
 
-export default function ScrollToTop({ children }: ScrollToTopProps): React.ReactElement {
-  const pathname = usePathname();
+function ScrollToTop({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
-
+  const pathname = usePathname();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname, searchParams]);

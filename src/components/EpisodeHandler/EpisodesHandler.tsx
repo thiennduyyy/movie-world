@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+"use client";
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 type EpisodeHandlerProps = {
@@ -8,9 +9,17 @@ type EpisodeHandlerProps = {
   count: number;
 };
 
-function EpisodeHandler({ seasons, season, episode }: EpisodeHandlerProps) {
-  const router = useRouter();
+export default function EpisodesHandlerWrapper(props: EpisodeHandlerProps) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EpisodeHandler {...props} />
+    </Suspense>
+  );
+}
+
+function EpisodeHandler({ seasons, season, episode, count }: EpisodeHandlerProps) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [activeSeason, setActiveSeason] = useState<string>(season);
   const [episodeCount, setEpisodeCount] = useState<number>(0);
 
@@ -43,6 +52,7 @@ function EpisodeHandler({ seasons, season, episode }: EpisodeHandlerProps) {
             </p>
           </div>
         ))}
+
       </div>
       <div className="flex flex-wrap items-center gap-2 mt-5">
         <p className="text-white mr-2 min-w-[100px]">Episodes:</p>
@@ -67,6 +77,7 @@ function EpisodeHandler({ seasons, season, episode }: EpisodeHandlerProps) {
             <p
               className={`text-white font-$
                 {Number(episode) === index + 1 && activeSeason === season ? 'medium' : 'normal'}`}
+
             >
               {index + 1}
             </p>
@@ -76,5 +87,3 @@ function EpisodeHandler({ seasons, season, episode }: EpisodeHandlerProps) {
     </div>
   );
 }
-
-export default EpisodeHandler;

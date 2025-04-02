@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import axios from '@/components/axios';
 import { TVShowDetail, Season } from '@/lib/types/types';
-import EpisodeHandler from '@/components/EpisodeHandler/EpisodesHandler';
 
 const base_url = "https://image.tmdb.org/t/p/w200";
 
@@ -12,7 +11,7 @@ export default function TVShow() {
     const params = useParams();
       const router = useRouter();
       const id = params.id;
-    const [seasons, setSeasons] = useState<Season[]>([]);
+    // const [seasons, setSeasons] = useState<Season[]>([]);
     const [detail, setDetail] = useState<TVShowDetail>({
         show: {} as TVShowDetail['show'],
         credits: { casts: [], director: {} as TVShowDetail['credits']['director'] },
@@ -47,7 +46,7 @@ export default function TVShow() {
                     }
                 });
 
-                setSeasons(seasons);
+                // setSeasons(seasons);
                 setDetail({ 
                     show: tvShow.data,
                     credits: { casts, director }, 

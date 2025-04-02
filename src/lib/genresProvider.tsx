@@ -11,12 +11,12 @@ type GenresContextType = {
 };
 
 const getGenres = async (): Promise<GenresList> => {
-    let genresList: GenresList = {};
+    const genresList: GenresList = {};
 
-    const movieGenres = await axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=efcd4adc614afb568e483ea646cf5b28&language=en-US');
-    const tvGenres = await axios.get('https://api.themoviedb.org/3/genre/tv/list?api_key=efcd4adc614afb568e483ea646cf5b28&language=en-US');
+    const movieGenres = await axios.get<{ genres: { id: number; name: string }[] }>('https://api.themoviedb.org/3/genre/movie/list?api_key=efcd4adc614afb568e483ea646cf5b28&language=en-US');
+    const tvGenres = await axios.get<{ genres: { id: number; name: string }[] }>('https://api.themoviedb.org/3/genre/tv/list?api_key=efcd4adc614afb568e483ea646cf5b28&language=en-US');
 
-    movieGenres.data.genres.forEach((genre: { id: number; name: string }) => {
+    movieGenres.data.genres.forEach((genre) => {
         if (genre.name === 'Science Fiction') {
             genresList[`${genre.id}`] = 'Sci-Fi';
         } else {
@@ -24,9 +24,9 @@ const getGenres = async (): Promise<GenresList> => {
         }
     });
 
-    tvGenres.data.genres.forEach((genre: { id: number; name: string }) => {
+    tvGenres.data.genres.forEach((genre) => {
         if (genre.name.includes('&')) {
-            let shortGenre = genre.name.split(' & ');
+            const shortGenre = genre.name.split(' & ');
             genresList[`${genre.id}`] = shortGenre[0];
         } else {
             genresList[`${genre.id}`] = genre.name;
